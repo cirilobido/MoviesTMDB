@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/img_poster"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_350sdp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_muvi_name" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_350sdp"
+        android:background="@drawable/gradient_overlay_dark"></View>
+
+    <LinearLayout
+        android:id="@+id/item_post"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_350sdp"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:gravity="bottom">
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:text="@string/app_name"
+            android:fontFamily="@font/sfprotextbold"
+            android:textSize="@dimen/_20sdp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/txt_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_accent"
+                android:padding="@dimen/_2sdp"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:textColor="@color/colorBackground"
+                android:fontFamily="@font/sfprotextbold"
+                android:text="2021"
+                android:textSize="@dimen/_8sdp" />
+
+            <TextView
+                android:id="@+id/txt_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:gravity="bottom"
+                android:textColor="@color/white"
+                android:fontFamily="@font/sfprotextregular"
+                android:text="@string/app_name"
+                android:textSize="@dimen/_10sdp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
