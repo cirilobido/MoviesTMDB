@@ -1,6 +1,7 @@
 package com.example.moviestmdb.Adapters;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +36,7 @@ public class SliderAdapter extends PlutoAdapter<PostModel, SliderAdapter.ViewHol
     public class ViewHolder extends PlutoViewHolder<PostModel>{
         LinearLayout item_post;
         ImageView imgPoster;
-        TextView txtTitle, txtYear, txtGenres;
+        TextView txtTitle, txtYear, txtGenres, txtAverage;
 
         public ViewHolder(ViewGroup parent, int itemLayoutId){
             super(parent, itemLayoutId);
@@ -43,6 +44,7 @@ public class SliderAdapter extends PlutoAdapter<PostModel, SliderAdapter.ViewHol
             txtTitle = getView(R.id.txt_title);
             txtYear = getView(R.id.txt_year);
             txtGenres = getView(R.id.txt_genres);
+            txtAverage = getView(R.id.txt_average);
             item_post = getView(R.id.item_post);
         }
 
@@ -55,9 +57,13 @@ public class SliderAdapter extends PlutoAdapter<PostModel, SliderAdapter.ViewHol
                     .error(activity.getResources().getDrawable(R.drawable.ic_muvi_name))
                     .into(imgPoster);
             txtTitle.setText(postModel.getPostTitle());
+            txtAverage.setText(String.valueOf(postModel.getVoteAverage()));
             String[] date = postModel.getReleaseDate().split("-");
             txtYear.setText(date[0]);
             //TODO: RXJava for the genders from the Array
+            for (int genderId : postModel.getGenreIdsList()){
+                Log.d("Genre", String.valueOf(genderId));
+            }
             txtGenres.setText("None");
         }
     }

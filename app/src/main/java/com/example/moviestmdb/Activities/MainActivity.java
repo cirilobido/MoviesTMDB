@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.moviestmdb.Adapters.SliderAdapter;
+import com.example.moviestmdb.BaseApplication;
 import com.example.moviestmdb.BuildConfig;
 import com.example.moviestmdb.Models.PostModel;
 import com.example.moviestmdb.Models.TMDBDataModel;
@@ -18,6 +19,8 @@ import com.opensooq.pluto.PlutoView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -39,10 +42,16 @@ public class MainActivity extends AppCompatActivity {
     private HttpLoggingInterceptor loggingInterceptor;
     private OkHttpClient.Builder httpClientBuilder;
 
+    @Inject
+    APIServiceClient apiServiceClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //DAGGER Injection for Retrofit client
+        ((BaseApplication) getApplication()).getRetrofitComponent().injectRetrofit(this);
+
         setView();
     }
 
@@ -67,21 +76,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTranding(){
         postModelList = new ArrayList<>();
-        loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-        httpClientBuilder = new OkHttpClient.Builder().addInterceptor(loggingInterceptor);
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.TMDB_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClientBuilder.build())
-                .build();
-
-        APIServiceClient apiServiceClient = retrofit.create(APIServiceClient.class);
+//        loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+//        httpClientBuilder = new OkHttpClient.Builder().addInterceptor(loggingInterceptor);
+//        retrofit = new Retrofit.Builder()
+//                .baseUrl(BuildConfig.TMDB_BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(httpClientBuilder.build())
+//                .build();
+//
+//        APIServiceClient apiServiceClient = retrofit.create(APIServiceClient.class);
         Call<TMDBDataModel> call = apiServiceClient.getTMDBTrending(BuildConfig.TMDB_KEY);
         call.enqueue(new Callback<TMDBDataModel>() {
             @Override
             public void onResponse(Call<TMDBDataModel> call, Response<TMDBDataModel> response) {
-                sliderAdapter = new SliderAdapter(MainActivity.this, response.body().getResults());
-//                sliderAdapter.setData(response.body().getResults());
+                postModelList.addAll(response.body().getResults());
                 setUpSliderView();
             }
 
@@ -94,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void setUpSliderView(){
+        sliderAdapter = new SliderAdapter(MainActivity.this, postModelList);
         sliderHome.create(sliderAdapter, getLifecycle());
         sliderHome.startAutoCycle(5000, true);
         sliderHome.setCustomIndicator(sliderIndicator);

@@ -23,14 +23,14 @@ public class PostModel {
     @SerializedName("release_date")
     private String releaseDate;
 
-    @SerializedName("vote_avegare")
+    @SerializedName("vote_average")
     private float voteAverage;
 
     @SerializedName("vote_count")
     private int voteCount;
 
-    @SerializedName("gender_ids")
-    private List<Integer> genderIdsList;
+    @SerializedName("genre_ids")
+    private List<Integer> genreIdsList;
 
     public String getPostId() {
         return postId;
@@ -96,11 +96,11 @@ public class PostModel {
         this.voteCount = voteCount;
     }
 
-    public List<Integer> getGenderIdsList() {
-        return genderIdsList;
+    public List<Integer> getGenreIdsList() {
+        return genreIdsList;
     }
 
-    public void setGenderIdsList(List<Integer> genderIdsList) {
-        this.genderIdsList = genderIdsList;
+    public void setGenreIdsList(List<Integer> genreIdsList) {
+        this.genreIdsList = genreIdsList;
     }
 }
