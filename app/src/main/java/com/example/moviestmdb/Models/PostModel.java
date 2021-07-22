@@ -32,6 +32,16 @@ public class PostModel {
     @SerializedName("genre_ids")
     private List<Integer> genreIdsList;
 
+    public List<GenreModel> getGenreModelList() {
+        return genreModelList;
+    }
+
+    public void setGenreModelList(List<GenreModel> genreModelList) {
+        this.genreModelList = genreModelList;
+    }
+
+    private List<GenreModel> genreModelList;
+
     public String getPostId() {
         return postId;
     }

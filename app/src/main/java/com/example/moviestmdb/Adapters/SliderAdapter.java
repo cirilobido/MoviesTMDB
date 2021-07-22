@@ -36,14 +36,14 @@ public class SliderAdapter extends PlutoAdapter<PostModel, SliderAdapter.ViewHol
     public class ViewHolder extends PlutoViewHolder<PostModel>{
         LinearLayout item_post;
         ImageView imgPoster;
-        TextView txtTitle, txtYear, txtGenres, txtAverage;
+        TextView txtTitle, txtYear, txtOverview, txtAverage;
 
         public ViewHolder(ViewGroup parent, int itemLayoutId){
             super(parent, itemLayoutId);
             imgPoster = getView(R.id.img_poster);
             txtTitle = getView(R.id.txt_title);
             txtYear = getView(R.id.txt_year);
-            txtGenres = getView(R.id.txt_genres);
+            txtOverview = getView(R.id.txt_overview);
             txtAverage = getView(R.id.txt_average);
             item_post = getView(R.id.item_post);
         }
@@ -60,11 +60,7 @@ public class SliderAdapter extends PlutoAdapter<PostModel, SliderAdapter.ViewHol
             txtAverage.setText(String.valueOf(postModel.getVoteAverage()));
             String[] date = postModel.getReleaseDate().split("-");
             txtYear.setText(date[0]);
-            //TODO: RXJava for the genders from the Array
-            for (int genderId : postModel.getGenreIdsList()){
-                Log.d("Genre", String.valueOf(genderId));
-            }
-            txtGenres.setText("None");
+            txtOverview.setText(postModel.getPostOverview());
         }
     }
 

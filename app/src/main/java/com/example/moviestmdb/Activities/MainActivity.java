@@ -10,6 +10,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.moviestmdb.Adapters.SliderAdapter;
 import com.example.moviestmdb.BaseApplication;
 import com.example.moviestmdb.BuildConfig;
+import com.example.moviestmdb.Models.GenreModel;
 import com.example.moviestmdb.Models.PostModel;
 import com.example.moviestmdb.Models.TMDBDataModel;
 import com.example.moviestmdb.R;
@@ -22,13 +23,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private LottieAnimationView animationView;
@@ -38,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private SliderAdapter sliderAdapter;
     private List<PostModel> postModelList;
 
-    private Retrofit retrofit;
-    private HttpLoggingInterceptor loggingInterceptor;
-    private OkHttpClient.Builder httpClientBuilder;
+    private Disposable disposable;
 
     @Inject
     APIServiceClient apiServiceClient;
@@ -76,30 +79,31 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTranding(){
         postModelList = new ArrayList<>();
-//        loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-//        httpClientBuilder = new OkHttpClient.Builder().addInterceptor(loggingInterceptor);
-//        retrofit = new Retrofit.Builder()
-//                .baseUrl(BuildConfig.TMDB_BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .client(httpClientBuilder.build())
-//                .build();
-//
-//        APIServiceClient apiServiceClient = retrofit.create(APIServiceClient.class);
-        Call<TMDBDataModel> call = apiServiceClient.getTMDBTrending(BuildConfig.TMDB_KEY);
-        call.enqueue(new Callback<TMDBDataModel>() {
-            @Override
-            public void onResponse(Call<TMDBDataModel> call, Response<TMDBDataModel> response) {
-                postModelList.addAll(response.body().getResults());
-                setUpSliderView();
-            }
+        apiServiceClient.getTMDBTrendingObservable(BuildConfig.TMDB_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TMDBDataModel>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        disposable = d;
+                    }
 
-            @Override
-            public void onFailure(Call<TMDBDataModel> call, Throwable t) {
-                t.printStackTrace();
-                animationView.setVisibility(View.GONE);
+                    @Override
+                    public void onNext(@NonNull TMDBDataModel tmdbDataModel) {
+                        postModelList.addAll(tmdbDataModel.getResults());
+                    }
 
-            }
-        });
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        e.printStackTrace();
+                        animationView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        setUpSliderView();
+                    }
+                });
     }
     private void setUpSliderView(){
         sliderAdapter = new SliderAdapter(MainActivity.this, postModelList);
@@ -107,5 +111,11 @@ public class MainActivity extends AppCompatActivity {
         sliderHome.startAutoCycle(5000, true);
         sliderHome.setCustomIndicator(sliderIndicator);
         animationView.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }

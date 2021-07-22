@@ -84,15 +84,15 @@
 
                             <com.opensooq.pluto.PlutoIndicator
                                 android:id="@+id/slider_indicator"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
-                                android:layout_alignParentRight="true"
+                                android:layout_centerHorizontal="true"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginBottom="@dimen/_10sdp"
-                                android:paddingBottom="@dimen/_10sdp"
                                 android:gravity="center"
                                 app:selected_color="@color/colorAccent"
                                 app:selected_height="@dimen/_6sdp"
@@ -104,8 +104,7 @@
                                 app:unselected_height="@dimen/_4sdp"
                                 app:unselected_width="@dimen/_4sdp"
                                 app:unselected_padding_left="@dimen/_1sdp"
-                                app:unselected_padding_right="@dimen/_1sdp"
-                                android:layout_marginRight="@dimen/_10sdp" />
+                                app:unselected_padding_right="@dimen/_1sdp" />
 
                         </RelativeLayout>
 
