@@ -17,5 +17,5 @@ public interface APIServiceClient {
     Call<TMDBDataModel> getTMDBLatest(@Query("api_key") String apiKey);
 
     @GET("discover/movie")
-    Call<GenreModel> getTMDBDiscover(@Query("api_key") String apiKey);
+    Call<TMDBDataModel> getTMDBDiscover(@Query("api_key") String apiKey);
 }

@@ -1,12 +1,16 @@
 package com.example.moviestmdb.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.moviestmdb.Adapters.LatestMoviesAdapter;
 import com.example.moviestmdb.Adapters.SliderAdapter;
 import com.example.moviestmdb.BaseApplication;
 import com.example.moviestmdb.BuildConfig;
@@ -41,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private PlutoView sliderHome;
     private PlutoIndicator sliderIndicator;
     private SliderAdapter sliderAdapter;
+    private LatestMoviesAdapter latestMoviesAdapter;
     private List<PostModel> postModelList;
-
+    private RecyclerView recyclerViewLatest, recyclerViewRecommended;
+    private ArrayList<PostModel> latestArray, recommendedArray;
     private Disposable disposable;
 
     @Inject
@@ -54,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //DAGGER Injection for Retrofit client
         ((BaseApplication) getApplication()).getRetrofitComponent().injectRetrofit(this);
-
         setView();
     }
 
@@ -74,7 +79,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        recyclerViewLatest = findViewById(R.id.recycler_view_movies);
+        recyclerViewLatest.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewRecommended = findViewById(R.id.recycler_view_recommended);
+        recyclerViewRecommended.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
         getTranding();
+        getLatestMovies();
+        getRecommendedMovies();
     }
 
     private void getTranding(){
@@ -101,15 +113,63 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-                        setUpSliderView();
+                        setUpTrandingView();
                     }
                 });
     }
-    private void setUpSliderView(){
+
+    private void setUpTrandingView(){
         sliderAdapter = new SliderAdapter(MainActivity.this, postModelList);
         sliderHome.create(sliderAdapter, getLifecycle());
         sliderHome.startAutoCycle(5000, true);
         sliderHome.setCustomIndicator(sliderIndicator);
+        animationView.setVisibility(View.GONE);
+    }
+
+    private void getLatestMovies() {
+        latestArray = new ArrayList<>();
+        Call<TMDBDataModel> call = apiServiceClient.getTMDBLatest(BuildConfig.TMDB_KEY);
+        call.enqueue(new Callback<TMDBDataModel>() {
+            @Override
+            public void onResponse(Call<TMDBDataModel> call, Response<TMDBDataModel> response) {
+                Log.i("getLatestMovies", response.body().getResults().toString());
+                latestArray.addAll(response.body().getResults());
+                setUpLatestMoviesView();
+            }
+
+            @Override
+            public void onFailure(Call<TMDBDataModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setUpLatestMoviesView(){
+        latestMoviesAdapter = new LatestMoviesAdapter(this, latestArray);recyclerViewLatest.setAdapter(latestMoviesAdapter);
+        animationView.setVisibility(View.GONE);
+    }
+
+    private void getRecommendedMovies(){
+        recommendedArray = new ArrayList<>();
+        Call<TMDBDataModel> call = apiServiceClient.getTMDBDiscover(BuildConfig.TMDB_KEY);
+        call.enqueue(new Callback<TMDBDataModel>() {
+            @Override
+            public void onResponse(Call<TMDBDataModel> call, Response<TMDBDataModel> response) {
+                Log.i("getRecommendedMovies", response.body().getResults().toString());
+                recommendedArray.addAll(response.body().getResults());
+                setUpRecommendedView();
+            }
+
+            @Override
+            public void onFailure(Call<TMDBDataModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setUpRecommendedView() {
+        latestMoviesAdapter = new LatestMoviesAdapter(this, recommendedArray);
+        recyclerViewRecommended.setAdapter(latestMoviesAdapter);
         animationView.setVisibility(View.GONE);
     }
 
