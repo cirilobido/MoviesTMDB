@@ -6,4 +6,9 @@
     <string name="text_for_you">For You</string>
     <string name="text_loading">Loading</string>
     <string name="text_retry">Retry</string>
+    <string name="text_cast">Cast</string>
+    <string name="text_related">Related</string>
+    <string name="text_trailer">Trailer</string>
+    <string name="text_my_list">My List</string>
+    <string name="text_more_info">More Info</string>
 </resources>

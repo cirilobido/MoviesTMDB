@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/btn_inactive.xml" value="0.2833333333333333" />
+        <entry key="app/src/main/res/drawable/ic_back_arrow.xml" value="0.2833333333333333" />
+        <entry key="app/src/main/res/drawable/ic_instagram.xml" value="0.2833333333333333" />
+        <entry key="app/src/main/res/drawable/ic_plus.xml" value="0.2833333333333333" />
+        <entry key="app/src/main/res/drawable/ic_trailer.xml" value="0.2833333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17889492753623187" />
-        <entry key="app/src/main/res/layout/activity_movies_details.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/activity_movies_details.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.14628623188405798" />
       </map>
     </option>
