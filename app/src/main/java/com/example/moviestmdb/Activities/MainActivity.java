@@ -145,7 +145,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLatestMoviesView(){
-        latestMoviesAdapter = new LatestMoviesAdapter(this, latestArray);recyclerViewLatest.setAdapter(latestMoviesAdapter);
+        latestMoviesAdapter = new LatestMoviesAdapter(this, latestArray);
+        recyclerViewLatest.setAdapter(latestMoviesAdapter);
         animationView.setVisibility(View.GONE);
     }
 
