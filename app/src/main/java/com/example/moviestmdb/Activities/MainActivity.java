@@ -104,6 +104,22 @@ public class MainActivity extends AppCompatActivity {
                         setUpSliderView();
                     }
                 });
+
+//        Call<TMDBDataModel> call = apiServiceClient.getTMDBTrending(BuildConfig.TMDB_KEY);
+//        call.enqueue(new Callback<TMDBDataModel>() {
+//            @Override
+//            public void onResponse(Call<TMDBDataModel> call, Response<TMDBDataModel> response) {
+//                postModelList.addAll(response.body().getResults());
+//                setUpSliderView();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<TMDBDataModel> call, Throwable t) {
+//                t.printStackTrace();
+//                animationView.setVisibility(View.GONE);
+//
+//            }
+//        });
     }
     private void setUpSliderView(){
         sliderAdapter = new SliderAdapter(MainActivity.this, postModelList);
