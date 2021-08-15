@@ -5,10 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.moviestmdb.Adapters.MoviesPostAdapter;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerViewLatest, recyclerViewRecommended;
     private ArrayList<PostModel> latestArray, recommendedArray;
     private Disposable disposable;
+    private ImageView imgSearch;
 
     @Inject
     APIServiceClient apiServiceClient;
@@ -74,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(false);
                 setView();
+            }
+        });
+
+        imgSearch = findViewById(R.id.img_search);
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
             }
         });
 

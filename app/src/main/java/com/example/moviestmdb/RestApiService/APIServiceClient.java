@@ -29,4 +29,7 @@ public interface APIServiceClient {
 
     @GET("movie/{movieId}/similar")
     Observable<TMDBDataModel> getMovieSimilar(@Path("movieId") String movieId, @Query("api_key") String apiKey);
+
+    @GET("search/movie")
+    Observable<TMDBDataModel> getSearch(@Query("api_key") String apiKey, @Query("query") String query, @Query("page") int page);
 }
