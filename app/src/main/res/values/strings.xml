@@ -12,4 +12,9 @@
     <string name="text_my_list">My List</string>
     <string name="text_more_info">More Info</string>
     <string name="text_error_loading">Sorry, something has gone wrong!</string>
+    <string name="text_search">Search</string>
+    <string name="text_search_hint">Once Upon A Time</string>
+    <string name="text_result_for">Result for</string>
+    <string name="text_no_result">No Result</string>
+    <string name="text_no_result_desc">Apparently we don\'t have what you are looking for!</string>
 </resources>

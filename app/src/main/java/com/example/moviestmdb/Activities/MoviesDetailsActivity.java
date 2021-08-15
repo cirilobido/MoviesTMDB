@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -211,7 +213,7 @@ public class MoviesDetailsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent trailerIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/results?search_query="
                                 + postModelData.getPostTitle()
-                                + " Trailer"));
+                                + " " + date[0] + " Trailer"));
                         startActivity(trailerIntent);
                     }
                 });

@@ -37,6 +37,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/img_search"
                     android:layout_width="@dimen/_22sdp"
                     android:layout_height="@dimen/_22sdp"
                     android:layout_marginEnd="@dimen/_10sdp"

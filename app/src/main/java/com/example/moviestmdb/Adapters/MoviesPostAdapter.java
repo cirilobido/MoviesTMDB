@@ -1,6 +1,7 @@
 package com.example.moviestmdb.Adapters;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
