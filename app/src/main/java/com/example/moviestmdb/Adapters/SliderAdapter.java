@@ -1,7 +1,9 @@
 package com.example.moviestmdb.Adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.moviestmdb.Activities.MoviesDetailsActivity;
 import com.example.moviestmdb.R;
 import com.example.moviestmdb.Models.PostModel;
 import com.opensooq.pluto.base.PlutoAdapter;
@@ -52,6 +55,7 @@ public class SliderAdapter extends PlutoAdapter<PostModel, SliderAdapter.ViewHol
         public void set(PostModel postModel, int i) {
             Glide.with(activity)
                     .load("https://image.tmdb.org/t/p/w342" + postModel.getPosterPath())
+                    .thumbnail(0.25f)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .placeholder(activity.getResources().getDrawable(R.drawable.ic_muvi_name))
                     .error(activity.getResources().getDrawable(R.drawable.ic_muvi_name))
@@ -61,6 +65,14 @@ public class SliderAdapter extends PlutoAdapter<PostModel, SliderAdapter.ViewHol
             String[] date = postModel.getReleaseDate().split("-");
             txtYear.setText(date[0]);
             txtOverview.setText(postModel.getPostOverview());
+            item_post.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(activity, MoviesDetailsActivity.class);
+                    intent.putExtra("postId", postModel.getPostId());
+                    activity.startActivity(intent);
+                }
+            });
         }
     }
 

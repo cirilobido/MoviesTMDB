@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    android:layout_marginTop="@dimen/_15sdp"
     tools:context=".Activities.MainActivity">
 
 
@@ -50,6 +51,7 @@
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="none"
             android:paddingBottom="@dimen/_5sdp">
 
             <ScrollView

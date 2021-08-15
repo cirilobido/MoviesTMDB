@@ -19,11 +19,11 @@ import com.example.moviestmdb.R;
 
 import java.util.ArrayList;
 
-public class LatestMoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MoviesPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Activity activity;
     private ArrayList<PostModel> arrayList;
 
-    public LatestMoviesAdapter(Activity activity, ArrayList<PostModel> arrayList){
+    public MoviesPostAdapter(Activity activity, ArrayList<PostModel> arrayList){
         this.activity = activity;
         this.arrayList = arrayList;
     }
@@ -50,6 +50,7 @@ public class LatestMoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ((ViewHolder) holder).txtTitle.setText(postModel.getPostTitle());
         Glide.with(activity)
                 .load("https://image.tmdb.org/t/p/w342" + postModel.getPosterPath())
+                .thumbnail(0.25f)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .placeholder(activity.getResources().getDrawable(R.drawable.ic_muvi_name))
                 .error(activity.getResources().getDrawable(R.drawable.ic_muvi_name))

@@ -8,13 +8,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.moviestmdb.Adapters.LatestMoviesAdapter;
+import com.example.moviestmdb.Adapters.MoviesPostAdapter;
 import com.example.moviestmdb.Adapters.SliderAdapter;
 import com.example.moviestmdb.BaseApplication;
 import com.example.moviestmdb.BuildConfig;
-import com.example.moviestmdb.Models.GenreModel;
 import com.example.moviestmdb.Models.PostModel;
 import com.example.moviestmdb.Models.TMDBDataModel;
 import com.example.moviestmdb.R;
@@ -29,11 +29,8 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private PlutoView sliderHome;
     private PlutoIndicator sliderIndicator;
     private SliderAdapter sliderAdapter;
-    private LatestMoviesAdapter latestMoviesAdapter;
+    private MoviesPostAdapter latestMoviesAdapter;
     private List<PostModel> postModelList;
     private RecyclerView recyclerViewLatest, recyclerViewRecommended;
     private ArrayList<PostModel> latestArray, recommendedArray;
@@ -57,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_main);
         //DAGGER Injection for Retrofit client
         ((BaseApplication) getApplication()).getRetrofitComponent().injectRetrofit(this);
@@ -116,22 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         setUpTrandingView();
                     }
                 });
-
-//        Call<TMDBDataModel> call = apiServiceClient.getTMDBTrending(BuildConfig.TMDB_KEY);
-//        call.enqueue(new Callback<TMDBDataModel>() {
-//            @Override
-//            public void onResponse(Call<TMDBDataModel> call, Response<TMDBDataModel> response) {
-//                postModelList.addAll(response.body().getResults());
-//                setUpSliderView();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<TMDBDataModel> call, Throwable t) {
-//                t.printStackTrace();
-//                animationView.setVisibility(View.GONE);
-//
-//            }
-//        });
     }
 
     private void setUpTrandingView(){
@@ -161,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpLatestMoviesView(){
-        latestMoviesAdapter = new LatestMoviesAdapter(this, latestArray);
+        latestMoviesAdapter = new MoviesPostAdapter(this, latestArray);
         recyclerViewLatest.setAdapter(latestMoviesAdapter);
         animationView.setVisibility(View.GONE);
     }
@@ -185,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpRecommendedView() {
-        latestMoviesAdapter = new LatestMoviesAdapter(this, recommendedArray);
+        latestMoviesAdapter = new MoviesPostAdapter(this, recommendedArray);
         recyclerViewRecommended.setAdapter(latestMoviesAdapter);
         animationView.setVisibility(View.GONE);
     }

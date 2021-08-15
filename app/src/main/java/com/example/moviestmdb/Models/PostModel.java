@@ -23,6 +23,12 @@ public class PostModel {
     @SerializedName("release_date")
     private String releaseDate;
 
+    @SerializedName("runtime")
+    private String runtime;
+
+    @SerializedName("homepage")
+    private String homepage;
+
     @SerializedName("vote_average")
     private float voteAverage;
 
@@ -32,15 +38,11 @@ public class PostModel {
     @SerializedName("genre_ids")
     private List<Integer> genreIdsList;
 
-    public List<GenreModel> getGenreModelList() {
-        return genreModelList;
-    }
-
-    public void setGenreModelList(List<GenreModel> genreModelList) {
-        this.genreModelList = genreModelList;
-    }
-
+    @SerializedName("genres")
     private List<GenreModel> genreModelList;
+
+    @SerializedName("cast")
+    private List<CastModel> castModelList;
 
     public String getPostId() {
         return postId;
@@ -112,5 +114,37 @@ public class PostModel {
 
     public void setGenreIdsList(List<Integer> genreIdsList) {
         this.genreIdsList = genreIdsList;
+    }
+
+    public List<GenreModel> getGenreModelList() {
+        return genreModelList;
+    }
+
+    public void setGenreModelList(List<GenreModel> genreModelList) {
+        this.genreModelList = genreModelList;
+    }
+
+    public List<CastModel> getCastModelList() {
+        return castModelList;
+    }
+
+    public void setCastModelList(List<CastModel> castModelList) {
+        this.castModelList = castModelList;
+    }
+
+    public String getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(String runtime) {
+        this.runtime = runtime;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
     }
 }

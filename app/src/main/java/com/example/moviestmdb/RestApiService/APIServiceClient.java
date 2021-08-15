@@ -1,6 +1,6 @@
 package com.example.moviestmdb.RestApiService;
 
-import com.example.moviestmdb.Models.GenreModel;
+import com.example.moviestmdb.Models.CastModel;
 import com.example.moviestmdb.Models.PostModel;
 import com.example.moviestmdb.Models.TMDBDataModel;
 
@@ -21,6 +21,12 @@ public interface APIServiceClient {
     @GET("discover/movie")
     Call<TMDBDataModel> getTMDBDiscover(@Query("api_key") String apiKey);
 
-    @GET("movies/{movieId}")
-    Call<PostModel> getMovieDetails(@Path("movieId") String movieId, @Query("api_key") String apiKey);
+    @GET("movie/{movieId}")
+    Observable<PostModel> getMovieDetails(@Path("movieId") String movieId, @Query("api_key") String apiKey);
+
+    @GET("movie/{movieId}/credits")
+    Observable<CastModel> getMovieCast(@Path("movieId") String movieId, @Query("api_key") String apiKey);
+
+    @GET("movie/{movieId}/similar")
+    Observable<TMDBDataModel> getMovieSimilar(@Path("movieId") String movieId, @Query("api_key") String apiKey);
 }

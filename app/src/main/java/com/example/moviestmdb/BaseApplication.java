@@ -7,6 +7,8 @@ import androidx.multidex.MultiDex;
 import com.example.moviestmdb.DependecyInjections.DaggerRetrofitComponent;
 import com.example.moviestmdb.DependecyInjections.RetrofitComponent;
 import com.example.moviestmdb.DependecyInjections.RetrofitModule;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 public class BaseApplication extends Application {
     private RetrofitComponent retrofitComponent;
@@ -19,6 +21,7 @@ public class BaseApplication extends Application {
                 .builder()
                 .retrofitModule(new RetrofitModule())
                 .build();
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
     public RetrofitComponent getRetrofitComponent() {
